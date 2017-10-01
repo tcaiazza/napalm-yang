@@ -315,6 +315,10 @@ network-instances:
                       regexp: "(?P<value>bgp bgp)"
                       key: "{{ protocol }} {{ protocol }}"
                       when: "{{ network_instance_key == 'global' }}"
+                    - path: "router.?protocol.?process_id"
+                      regexp: "(?P<value>ospf ospf)"
+                      key: "{{ protocol }} {{ protocol }}"
+                      when: "{{ network_instance_key == 'global' }}"
                     - path: "router.?protocol.?process_id.vrf.{{ network_instance_key }}"
                       regexp: "(?P<value>bgp bgp)"
                       from: root_network-instances.0

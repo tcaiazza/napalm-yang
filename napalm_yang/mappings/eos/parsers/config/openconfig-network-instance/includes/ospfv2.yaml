@@ -1,9 +1,11 @@
 ---
-_process: not_implemented
+_process:
+    - gate: true
+      when: "{{ protocol_key != 'ospf ospf' }}"
 areas:
-    _process: not_implemented
+    _process: unnecessary
     area:
-        _process: not_implemented
+        _process: unnecessary
         config:
             _process: not_implemented
             identifier:
@@ -11,11 +13,14 @@ areas:
         identifier:
             _process: not_implemented
         interfaces:
-            _process: not_implemented
+            _process: unnecessary
             interface:
-                _process: not_implemented
+                _process:
+                    - path: interface
+                      regexp: "^(?P<value>(\\w|-)*\\d+(\\/\\d+)*)$"
+                      from: root_network_instance.0
                 config:
-                    _process: not_implemented
+                    _process: unnecessary
                     authentication-type:
                         _process: not_implemented
                     hide-network:
@@ -23,7 +28,8 @@ areas:
                     id:
                         _process: not_implemented
                     metric:
-                        _process: not_implemented
+                        _process:
+                            - path: ip.ospf.cost
                     multi-area-adjacency-primary:
                         _process: not_implemented
                     network-type:
@@ -123,25 +129,30 @@ areas:
                 state:
                     _process: not_implemented
 global:
-    _process: not_implemented
+    _process: unnecessary
     config:
-        _process: not_implemented
+        _process: unnecessary
         hide-transit-only-networks:
             _process: not_implemented
         igp-shortcuts:
             _process: not_implemented
         log-adjacency-changes:
-            _process: not_implemented
+            _process:
+                - path: no.log-adjacency-changes
+                  present: no
         router-id:
-            _process: not_implemented
+            _process:
+                - path: router-id
         summary-route-cost-mode:
             _process: not_implemented
     graceful-restart:
-        _process: not_implemented
+        _process: unnecessary
         config:
-            _process: not_implemented
+            _process: unnecessary
             enabled:
-                _process: not_implemented
+                _process:
+                    - path: graceful-restart
+                      present: yes
             helper-only:
                 _process: not_implemented
         state:
@@ -193,7 +204,7 @@ global:
             config:
                 _process: not_implemented
                 initial-delay:
-                    _process: not_implemented
+                    _process:
                 maximum-delay:
                     _process: not_implemented
             state:
@@ -213,9 +224,10 @@ global:
             state:
                 _process: not_implemented
         spf:
-            _process: not_implemented
+            _process: unnecessary
             config:
-                _process: not_implemented
+                _process:
+                    - path: timers.throttle.spf
                 initial-delay:
                     _process: not_implemented
                 maximum-delay:
